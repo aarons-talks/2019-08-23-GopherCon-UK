@@ -67,6 +67,8 @@ $ export ATHENS_ARCHIVE="$PWD/athens-archive"
 $ docker run -p 3000:3000 -e GO_ENV=development -e ATHENS_GO_GET_WORKERS=5 -e ATHENS_STORAGE_TYPE=disk -e ATHENS_DISK_STORAGE_ROOT=/athens -v $ATHENS_ARCHIVE:/athens gomods/athens:v0.5.0
 ```
 
+>Set `ATHENS_ARCHIVE` to wherever your archive lives. If, for example, it is on a USB key, set it to `/Volumes/MyKey` (this is where it would most likely live on a Mac)
+
 Next, clear out your cache again:
 
 ```console
@@ -81,11 +83,13 @@ And finally, run the app again!
 $ go run .
 ```
 
->Notice how much _faster_ the build is this time, compared the the previous demo. That's because Athens isn't downloading anything - it's just streaming data from disk to the client.
+>Notice how much faster the build is this time, compared the the previous demo. That's because Athens isn't downloading anything - it's just streaming data directly from disk to the client!
 
 ### If you want to create your own disk archive
 
-Athens treats storage like a cache, except without the evictions or TTLs. That means you can mount an empty volume, connect to the internet, and execute `go run` (or similar) against that Athens. On every "miss", Athens will _synchronously_ download the module and store it. After your `go run` succeeds, Athens is guaranteed to have all your app's dependencies on disk.
+Athens treats storage like a cache, except without the evictions or TTLs. That means you can mount an empty volume, connect to the internet, and execute `go run` (or similar) against that Athens.
+
+On every "miss", Athens will _synchronously_ download the module and store it. After your `go run` succeeds, Athens guarantees that it will have stored all your app's dependencies on disk (the same guarantee applies to all other storage drivers too!).
 
 These commands will set up Athens with disk storage and an empty volume:
 
