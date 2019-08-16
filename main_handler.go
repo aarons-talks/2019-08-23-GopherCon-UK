@@ -11,9 +11,10 @@ func mainHandler(c *gin.Context) {
 	<head></head>
 	<body>
 	<center>
-	<h1>Hey GopherCon!</h1>
-	<h3>What better way to demo Athens than with cat pictures?</h3>
-	<h3>A demo with cat <i>and</i> dog pictures</h3>
+	<h1>Hey GopherCon UK!</h1>
+	<p><img src="/img/gopher-golfer.png"/></p>
+	<p>What better way to demo Athens than with cat pictures?</p>
+	<h1>A demo with cat <i>and</i> dog pictures</h1>
 	<p><a href="/kitty">Cats</a></p>
 	<p><a href="/pup">Dogs</a></p>
 	</center>
