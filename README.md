@@ -56,7 +56,15 @@ $ go run .
 
 Like I mentioned in the last demo, Athens stores the dependencies you use _forever_ in its own storage. That means that you can build your code without access to the internet. Let's do that here!
 
-First, make sure not to shut down the Athens server from last time - its storage is inside the Docker container!
+In the previous step, Athens was using in-memory storage, which is strictly for local development / demonstration purposes.
+
+In this demo, we're going to run Athens using its disk storage driver, and pre-load its module database - located in this repository at `athens-archive/` with all the dependencies our app needs. This way, Athens will be able to serve all the dependencies that `go run` requests, and won't ever need to fetch code from the public internet.
+
+First, run Athens with the disk driver, and mount the module database into the Docker container:
+
+```console
+$ docker run -p 3000:3000 -e GO_ENV=development -e ATHENS_GO_GET_WORKERS=5 -e ATHENS_STORAGE_TYPE=disk -e ATHENS_DISK_STORAGE_ROOT=/athens -v $PWD/athens-archive:/athens gomods/athens:v0.5.0
+```
 
 Next, clear out your cache again:
 
@@ -66,13 +74,26 @@ $ sudo rm -rf $(go env GOPATH)/pkg/mod
 
 And then, **shut down your internet connection** :see_no_evil:.
 
-And finally, do the build & run again!
+And finally, run the app again!
 
 ```console
 $ go run .
 ```
 
-And you're done!
+>Notice how much _faster_ the build is this time, compared the the previous demo. That's because Athens isn't downloading anything - it's just streaming data from disk to the client.
+
+### If you want to create your own disk archive
+
+Athens treats storage like a cache, except without the evictions or TTLs. That means you can mount an empty volume, connect to the internet, and execute `go run` (or similar) against that Athens. On every "miss", Athens will _synchronously_ download the module and store it. After your `go run` succeeds, Athens is guaranteed to have all your app's dependencies on disk.
+
+These commands will set up Athens with disk storage and an empty volume:
+
+```console
+$ mkdir $ATHENS_ARCHIVE
+$ docker run -p 3000:3000 -e GO_ENV=development -e ATHENS_GO_GET_WORKERS=5 -e ATHENS_STORAGE_TYPE=disk -e ATHENS_DISK_STORAGE_ROOT=/athens -v $ATHENS_ARCHIVE:/athens gomods/athens:v0.5.0
+```
+
+After you run them, set `GOPROXY` and do a `go run` like we did in the previous demos, and the disk archive will be at `$ATHENS_ARCHIVE`.
 
 ## Finally
 
