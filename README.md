@@ -63,7 +63,8 @@ In this demo, we're going to run Athens using its disk storage driver, and pre-l
 First, run Athens with the disk driver, and mount the module database into the Docker container:
 
 ```console
-$ docker run -p 3000:3000 -e GO_ENV=development -e ATHENS_GO_GET_WORKERS=5 -e ATHENS_STORAGE_TYPE=disk -e ATHENS_DISK_STORAGE_ROOT=/athens -v $PWD/athens-archive:/athens gomods/athens:v0.5.0
+$ export ATHENS_ARCHIVE="$PWD/athens-archive"
+$ docker run -p 3000:3000 -e GO_ENV=development -e ATHENS_GO_GET_WORKERS=5 -e ATHENS_STORAGE_TYPE=disk -e ATHENS_DISK_STORAGE_ROOT=/athens -v $ATHENS_ARCHIVE:/athens gomods/athens:v0.5.0
 ```
 
 Next, clear out your cache again:
