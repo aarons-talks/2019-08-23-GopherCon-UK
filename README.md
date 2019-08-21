@@ -34,13 +34,13 @@ First, run this to start Athens up:
 $ docker run -p 3000:3000 -e GO_ENV=development -e ATHENS_GO_GET_WORKERS=5 gomods/athens:v0.5.0
 ```
 
-And then to set your `GOPROXY` environment variable to tell modules to use the local server:
+Next, open a new terminal window and set your `GOPROXY` environment variable to tell modules to use the local server:
 
 ```console
 $ export GOPROXY=http://localhost:3000
 ```
 
-Also, the Go tool keeps a read-only on-disk cache of every module version you've downloaded for any build. To make it read-only, it stores each file in the cache with `-r--r--r--` permissions. Since that's the case, you need to use `sudo` to clear the cache.
+Also, the Go tool keeps a read-only on-disk cache of every module version you've downloaded for any build. To make it read-only, it stores each file in the cache with `-r--r--r--` permissions. Since that's the case, you need to use `sudo` to clear the cache. Do this in the same terminal window as the previous step:
 
 ```console
 $ sudo rm -rf $(go env GOPATH)/pkg/mod
@@ -69,7 +69,7 @@ $ docker run -p 3000:3000 -e GO_ENV=development -e ATHENS_GO_GET_WORKERS=5 -e AT
 
 >Set `ATHENS_ARCHIVE` to wherever your archive lives. If, for example, it is on a USB key, set it to `/Volumes/MyKey` (this is where it would most likely live on a Mac)
 
-Next, clear out your cache again:
+Next, in a new terminal, clear out your cache again:
 
 ```console
 $ sudo rm -rf $(go env GOPATH)/pkg/mod
