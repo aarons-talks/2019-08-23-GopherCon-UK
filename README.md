@@ -79,6 +79,8 @@ $ sudo rm -rf $(go env GOPATH)/pkg/mod
 
 And then, **shut down your internet connection** :see_no_evil:.
 
+>You can go to http://localhost:3000/catalog again and see all the modules that Athens has in its storage. Notice that this is the same output that you saw at the end of the first demo. We've pre-loaded all the modules into storage that our app will need!
+
 And finally, run the app again!
 
 ```console
