@@ -52,6 +52,8 @@ And then build and run the server!
 $ go run .
 ```
 
+>After your app is up and running, you can go to http://localhost:3000/catalog to see all the modules that Athens has downloaded into its storage.
+
 ## Second Way: Use Your Athens While Offline :scream:
 
 Like I mentioned in the last demo, Athens stores the dependencies you use _forever_ in its own storage. That means that you can build your code without access to the internet. Let's do that here!
